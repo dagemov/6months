@@ -1,0 +1,20 @@
+# Evitar cambios en finales de línea para todos los archivos
+* -text
+
+# Asegurar que los archivos binarios del framework no se modifiquen
+*.dll binary
+*.wasm binary
+*.js binary
+*.gz binary
+*.br binary
+*.dat binary
+*.ico binary
+*.eot binary
+*.otf binary
+*.ttf binary
+*.woff binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg binary   
