@@ -1,10 +1,40 @@
-# Evitar cambios en finales de línea para todos los archivos
-* -text
+* text=auto
 
-# Asegurar que los archivos binarios del framework no se modifiquen
+# Cross-platform source, config, docs and web assets.
+*.cs text eol=lf
+*.csproj text eol=lf
+*.props text eol=lf
+*.targets text eol=lf
+*.json text eol=lf
+*.xml text eol=lf
+*.md text eol=lf
+*.razor text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+*.html text eol=lf
+*.sql text eol=lf
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+.dockerignore text eol=lf
+.gitattributes text eol=lf
+.gitignore text eol=lf
+Dockerfile text eol=lf
+
+# Windows-native tooling and scripts.
+*.sln text eol=crlf
+*.slnx text eol=crlf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary files must never be normalized.
 *.dll binary
+*.exe binary
+*.pdb binary
 *.wasm binary
-*.js binary
+*.zip binary
 *.gz binary
 *.br binary
 *.dat binary
@@ -13,8 +43,9 @@
 *.otf binary
 *.ttf binary
 *.woff binary
+*.woff2 binary
 *.png binary
 *.jpg binary
 *.jpeg binary
 *.gif binary
-*.svg binary   
+*.pdf binary
