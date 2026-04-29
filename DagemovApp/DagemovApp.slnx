@@ -1,1 +1,10 @@
-<Solution />
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Dagemov.Api/Dagemov.Api.csproj" />
+    <Project Path="src/Dagemov.Application/Dagemov.Application.csproj" />
+    <Project Path="src/Dagemov.Contracts/Dagemov.Contracts.csproj" />
+    <Project Path="src/Dagemov.Domain/Dagemov.Domain.csproj" />
+    <Project Path="src/Dagemov.Infrastructure/Dagemov.Infrastructure.csproj" />
+    <Project Path="src/Dagemov.Persistence/Dagemov.Persistence.csproj" />
+  </Folder>
+</Solution>

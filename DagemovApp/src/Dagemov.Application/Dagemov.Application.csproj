@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\srcDagemov.Domain\Dagemov.Domain.csproj" />
+    <ProjectReference Include="..\Dagemov.Domain\Dagemov.Domain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
