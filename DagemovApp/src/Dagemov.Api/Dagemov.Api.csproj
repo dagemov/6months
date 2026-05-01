@@ -4,8 +4,6 @@
     <ProjectReference Include="..\Dagemov.Application\Dagemov.Application.csproj" />
     <ProjectReference Include="..\Dagemov.Contracts\Dagemov.Contracts.csproj" />
     <ProjectReference Include="..\Dagemov.Infrastructure\Dagemov.Infrastructure.csproj" />
-    <ProjectReference Include="..\Dagemov.Persistence\Dagemov.Persistence.csproj" />
-    <ProjectReference Include="..\Dagemov.Domain\Dagemov.Domain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
