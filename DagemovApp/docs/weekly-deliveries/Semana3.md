@@ -128,3 +128,22 @@ por que : todas están son reglas de dominio para workShift, porque le pertenece
 		 2.  public string? ModifideByUser { get; set; } = string.Empty!; //Coger el usuario que modifico la entidad (auditoria)
 		 3.  public DateTime UpdatedDate { get; private set; }
 		 > Mejoramiento de Namings un poco mas especificos o buscar la forma de dar valores no tan de codigo , si no humanos .
+
+#fixSection
+## Correcciones aplicadas despues de la revision
+
+1. **Bug del constructor de `Company` corregido**
+	- Antes se validaba `CompanyMemberShipStatus` usando la propiedad antes de asignarle un valor.
+	- Ahora el constructor recibe el estado de membresia como argumento explicito y valida ese valor antes de asignarlo a la entidad.
+
+2. **Archivo duplicado de la entrega corregido**
+	- Se define `Semana3.md` como archivo canonico de la semana 3.
+	- Se elimina la copia duplicada `Semana 3.md` para evitar ambiguedad en correcciones futuras.
+
+3. **Warning de nulabilidad en `WorkShift` corregido**
+	- `ShiftPeriod` queda inicializado con `null!` para la ruta de materializacion controlada del constructor protegido.
+	- Se deja un comentario explicito para documentar esa intencion y eliminar el warning `CS8618`.
+
+4. **Resultado tecnico del fix**
+	- La solucion vuelve a compilar sin el warning previo asociado a `WorkShift`.
+	- El dominio sigue libre de EF Core y librerias externas.

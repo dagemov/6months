@@ -8,7 +8,7 @@ public class WorkShift
     public int Id { get; private set; }
     //public DateTime OpenShift { get; private set; }
     //public DateTime CloseShift { get; private set; } lo movimos a ShiftPeriod , para ser reutilizable en cualquier clase de domino que requiera anadir un shift
-    private ShiftPeriod ShiftPeriod { get; set; }
+    private ShiftPeriod ShiftPeriod { get; set; } = null!;
     public string? Description { get; private set; }
     public  WorkShiftStatus WorkShiftStatus { get; private set; }
     public DateTime BreakTime { get; private set; }
@@ -16,7 +16,7 @@ public class WorkShift
     public DateTime UpdatedDate { get; private set; }
     protected WorkShift()
     {
-       
+        // Reserved for controlled materialization in future infrastructure scenarios.
     }
     public WorkShift(int id, DateTime openShift, DateTime endShift,string description, WorkShiftStatus workShiftStatus)
     {
