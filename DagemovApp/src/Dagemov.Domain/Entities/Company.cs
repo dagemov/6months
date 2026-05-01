@@ -18,16 +18,22 @@ public class Company
     {
         
     }
-    public Company(Guid id,string name,string legalName,string description)
+    public Company(
+        Guid id,
+        string name,
+        string legalName,
+        string description,
+        CompanyMemberShipStatus companyMemberShipStatus)
     {
         if (id == Guid.Empty) throw new ArgumentException($"Id is no valid to save the record : {0}");
         ValidationStrings(name,nameof( Name));
         ValidationStrings(legalName, nameof(legalName));
-        ValidationCompanyStatus<CompanyMemberShipStatus>(CompanyMemberShipStatus, nameof(CompanyMemberShipStatus));
+        ValidationCompanyStatus(companyMemberShipStatus, nameof(CompanyMemberShipStatus));
         this.Id = id;
         this.Name = name;
         this.LegalName = legalName;
         this.Description = description;
+        CompanyMemberShipStatus = companyMemberShipStatus;
         CreatedDate = DateTime.UtcNow;
 
         UpdatedDate = DateTime.UtcNow;
@@ -38,12 +44,9 @@ public class Company
         if (string.IsNullOrEmpty(x) || string.IsNullOrWhiteSpace(x)) throw new ArgumentException($"The field {fieldName} is required  ");
         if (x.Length < 3 || x.Length>250 ) throw new ArgumentException($"The filed {fieldName}  must contain  between in 3 at 250 characters");
     }
-    private static void ValidationCompanyStatus<TEnum>(CompanyMemberShipStatus choice, string fieldName)
+    private static void ValidationCompanyStatus(CompanyMemberShipStatus choice, string fieldName)
     {
-        var range = Enum.GetNames(typeof(CompanyMemberShipStatus)).Length;
-       
-
-        if (((int)choice) > range || ((int)choice) < 1)
+        if (!Enum.IsDefined(choice))
         {
             throw new ArgumentException($"The field {fieldName} is invalid, please select a valid choice.");
         }
