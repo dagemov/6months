@@ -1,8 +1,10 @@
 ﻿using Dagemov.Domain.Enums;
+using Dagemov.Domain.Interfaces;
+using Dagemov.Domain.ValueObjects;
 
 namespace Dagemov.Domain.Entities;
 
-public class Company
+public class Company : IAuditableEntity
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; } = string.Empty!;
@@ -10,9 +12,10 @@ public class Company
 
     public string? Description { get; private set; } = string.Empty!;
     public CompanyMemberShipStatus CompanyMemberShipStatus { get; private set; }
-    public DateTime CreatedDate { get; private set; } 
+
+    public DateTime CreatedDate { get; private set; }
     public DateTime UpdatedDate { get; private set; }
-    public string? ModifideByUser { get; set; } = string.Empty!; //Coger el usuario que modifico la entidad (auditoria)
+    public string? ModifiedByUser { get; private set; }
 
     protected Company()
     {
@@ -23,7 +26,10 @@ public class Company
         string name,
         string legalName,
         string description,
-        CompanyMemberShipStatus companyMemberShipStatus)
+        CompanyMemberShipStatus companyMemberShipStatus,
+        DateTime createdDate,
+        string userName
+        )
     {
         if (id == Guid.Empty) throw new ArgumentException($"Id is no valid to save the record : {0}");
         ValidationStrings(name,nameof( Name));
@@ -34,9 +40,7 @@ public class Company
         this.LegalName = legalName;
         this.Description = description;
         CompanyMemberShipStatus = companyMemberShipStatus;
-        CreatedDate = DateTime.UtcNow;
 
-        UpdatedDate = DateTime.UtcNow;
     }
     //Validation rules to the string fiels 
     private static void ValidationStrings(string x,string fieldName)
@@ -51,18 +55,48 @@ public class Company
             throw new ArgumentException($"The field {fieldName} is invalid, please select a valid choice.");
         }
     }
-    public void UpdateName(string newName)
+    public void UpdateName(string newName,string username)
     {
         ValidationStrings(newName , nameof(Name));
         Name = newName;
-        UpdatedDate = DateTime.UtcNow;
     }
-    public void UpdateDescription(string newDescription)
+    public void UpdateDescription(string newDescription,string username)
     {
         ValidationStrings(newDescription, nameof(Description));
         Description = newDescription;
-        UpdatedDate = DateTime.UtcNow;
+
     }
 
-    
+    public void MarkCreated(DateTime date, string userName)
+    {
+        ValidateAuditDate(date);
+        ValidateAuditUser(userName);
+
+        CreatedDate = date;
+        UpdatedDate = date;
+        ModifiedByUser = userName;
+    }
+
+    public void MarkUpdated(DateTime date, string userName)
+    {
+        ValidateAuditDate(date);
+        ValidateAuditUser(userName);
+
+        UpdatedDate = date;
+        ModifiedByUser = userName;
+    }
+    private static void ValidateAuditDate(DateTime date)
+    {
+        if (date == default)
+            throw new ArgumentException("Audit date cannot be default.");
+    }
+
+    private static void ValidateAuditUser(string userName)
+    {
+        if (string.IsNullOrWhiteSpace(userName))
+            throw new ArgumentException("Audit user is required.");
+
+        if (userName.Length > 150)
+            throw new ArgumentException("Audit user cannot exceed 150 characters.");
+    }
 }
