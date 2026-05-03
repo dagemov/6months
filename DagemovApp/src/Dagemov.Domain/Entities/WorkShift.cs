@@ -1,24 +1,26 @@
 ﻿using Dagemov.Domain.Enums;
+using Dagemov.Domain.Interfaces;
 using Dagemov.Domain.ValueObjects;
 
 namespace Dagemov.Domain.Entities;
 
-public class WorkShift
+public class WorkShift : IAuditableEntity
 {
     public int Id { get; private set; }
-    //public DateTime OpenShift { get; private set; }
-    //public DateTime CloseShift { get; private set; } lo movimos a ShiftPeriod , para ser reutilizable en cualquier clase de domino que requiera anadir un shift
-    private ShiftPeriod ShiftPeriod { get; set; } = null!;
+    public ShiftPeriod ShiftPeriod { get; set; } = null!;
     public string? Description { get; private set; }
     public  WorkShiftStatus WorkShiftStatus { get; private set; }
     public DateTime BreakTime { get; private set; }
+
     public DateTime CreatedDate { get; private set; }
     public DateTime UpdatedDate { get; private set; }
+    public string? ModifiedByUser { get; private set; }
+
     protected WorkShift()
     {
-        // Reserved for controlled materialization in future infrastructure scenarios.
+        
     }
-    public WorkShift(int id, DateTime openShift, DateTime endShift,string description, WorkShiftStatus workShiftStatus)
+    public WorkShift(int id, DateTime openShift, DateTime endShift,string description, WorkShiftStatus workShiftStatus, string userName)
     {
         if (id < 0) throw new ArgumentException($"Invalid Id to this record <{0}>");
         Id = id;
@@ -28,19 +30,15 @@ public class WorkShift
         ValidationChooseEnum<WorkShiftStatus>(workShiftStatus, nameof(WorkShiftStatus));
         WorkShiftStatus = workShiftStatus;   
         Description = description;
-        CreatedDate = DateTime.UtcNow;
 
-        UpdatedDate = DateTime.UtcNow;
     }
 
 
-    private void SetShifts(DateTime openShift, DateTime endShift)
+    private void SetShifts(DateTime openShift, DateTime endShift,string userName)
     {
         ShiftPeriod.ValidationShifts(openShift, endShift);
         this.ShiftPeriod = new(openShift, endShift);
-        //OpenShift = openShift;
-        //CloseShift = endShift;
-        UpdatedDate = DateTime.UtcNow;
+
     }
     private void SetBreakTime(DateTime breakTime)
     {
@@ -64,25 +62,50 @@ public class WorkShift
     {
         if (string.IsNullOrWhiteSpace(x) || string.IsNullOrEmpty(x)) throw new ArgumentException($"Invalid {fieldName} is null or empy , ples inpout at valid Description ");
     }
-    public  void UpdatedDescription(string newDescription)
+    public  void UpdatedDescription(string newDescription,string userName)
     {
         ValidationDescription(newDescription,nameof(Description));
         Description = newDescription;
-        UpdatedDate = DateTime.UtcNow;
 
-    }
-
-    public void SetCreatedDate(DateTime dateTime)
-    {
-        CreatedDate = dateTime;
-        UpdatedDate = DateTime.UtcNow;
     }
     //Actions
 
-    public void CompleteShift()
+    public void CompleteShift(string userName)
     {
         if(this.WorkShiftStatus!= WorkShiftStatus.Active) throw new InvalidOperationException("Only the Activates shifts can be marked such completed");
         this.WorkShiftStatus = WorkShiftStatus.Completed;
-        this.UpdatedDate = DateTime.UtcNow;
+    }
+
+    public void MarkCreated(DateTime date, string userName)
+    {
+        ValidateAuditDate(date);
+        ValidateAuditUser(userName);
+
+        CreatedDate = date;
+        UpdatedDate = date;
+        ModifiedByUser = userName;
+    }
+
+    public void MarkUpdated(DateTime date, string userName)
+    {
+        ValidateAuditDate(date);
+        ValidateAuditUser(userName);
+
+        UpdatedDate = date;
+        ModifiedByUser = userName;
+    }
+    private static void ValidateAuditDate(DateTime date)
+    {
+        if (date == default)
+            throw new ArgumentException("Audit date cannot be default.");
+    }
+
+    private static void ValidateAuditUser(string userName)
+    {
+        if (string.IsNullOrWhiteSpace(userName))
+            throw new ArgumentException("Audit user is required.");
+
+        if (userName.Length > 150)
+            throw new ArgumentException("Audit user cannot exceed 150 characters.");
     }
 }
