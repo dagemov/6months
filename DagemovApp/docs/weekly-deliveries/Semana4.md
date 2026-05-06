@@ -138,3 +138,7 @@ No ejecuto la migración y de momento descarto el final del punto 4 y 5 , no por
 # Soluciones para Deuda Tecnica
 No Abrir otra semana , crear una sub-fase de la semana 4 donde sea una retro alimentación y apliquemos un patrón arquitectónico correcto , una integración de las capas mencionadas  ; una final integración con el API y realizar la primera migración . 
 Se marcaría semana 4.1 , rama sugerida ->  feature/week-04-persistence-Infrastructre-foundation
+## Fix tecnico adicional
+- Se agrega la referencia explicita a `Microsoft.EntityFrameworkCore.SqlServer` en `Dagemov.Persistence`.
+- Motivo: al reabrir la solucion el IDE seguia marcando warning y el proyecto perdia extensiones relacionales necesarias para configuraciones como `HasColumnName`.
+- Decision: dejar el provider SQL Server declarado directamente en el `.csproj` para estabilizar restore, compilacion y tooling de EF Core antes de entrar a la subfase 4.1.
