@@ -4,6 +4,11 @@
     <ProjectReference Include="..\Dagemov.Domain\Dagemov.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contracs\Interfaces\" />
+    <Folder Include="Contracs\Services\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

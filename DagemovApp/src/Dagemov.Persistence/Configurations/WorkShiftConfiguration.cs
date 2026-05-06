@@ -1,5 +1,4 @@
 ﻿using Dagemov.Domain.Entities;
-using Dagemov.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,11 +16,11 @@ public class WorkShiftConfiguration : IEntityTypeConfiguration<WorkShift>
 
         builder.Property(breakTime => breakTime.BreakTime).
             IsRequired(true);
-    
-      
+
+
         builder.OwnsOne(x => x.ShiftPeriod, period =>
         {
-            period.Property(p => p.Startshift)
+            period.Property(p => p.StartShift)
                 .HasColumnName("StartShift")
                 .IsRequired();
 
@@ -30,6 +29,8 @@ public class WorkShiftConfiguration : IEntityTypeConfiguration<WorkShift>
                 .IsRequired();
         });
 
+        builder.Navigation(x => x.ShiftPeriod)
+            .IsRequired();
 
         builder.Property(x => x.CreatedDate)
             .IsRequired();
@@ -42,5 +43,5 @@ public class WorkShiftConfiguration : IEntityTypeConfiguration<WorkShift>
             .HasMaxLength(150);
 
     }
-    
+
 }

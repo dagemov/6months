@@ -6,7 +6,7 @@ namespace Dagemov.Domain.ValueObjects;
 
 public class ShiftPeriod
 {
-    public DateTime Startshift { get; private set; }
+    public DateTime StartShift { get; private set; }
     public DateTime EndShift { get; private set; }
     protected ShiftPeriod()
     {
@@ -15,7 +15,7 @@ public class ShiftPeriod
     public ShiftPeriod(DateTime openShift, DateTime endShift)
     {
         ValidationShifts(openShift, endShift);
-        Startshift = openShift;
+        StartShift = openShift;
         EndShift = endShift;
     }
     public static void ValidationShifts(DateTime openShift, DateTime endShift)
@@ -25,7 +25,7 @@ public class ShiftPeriod
 
     private void SetStartShift(DateTime openShift)
     {
-        Startshift = openShift;
+        StartShift = openShift;
     }
     private void SetEndShitf(DateTime closeShift)
     {
