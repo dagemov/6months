@@ -1,8 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.7" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Dagemov.Application\Dagemov.Application.csproj" />
     <ProjectReference Include="..\Dagemov.Domain\Dagemov.Domain.csproj" />
+    <ProjectReference Include="..\Dagemov.Persistence\Dagemov.Persistence.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -9,6 +9,10 @@ public class DagemovDbContext : DbContext
 {
     public DbSet<Company> Companies { get; set; }
     public DbSet<WorkShift> Shifts { get; set; }
+    public DagemovDbContext(DbContextOptions<DagemovDbContext> options) : base(options)
+    {
+        
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
