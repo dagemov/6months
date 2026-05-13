@@ -7,11 +7,11 @@ public abstract class AbstracAuditTable : IAuditableEntity
     public DateTime CreatedDate { get; private set; }
     public DateTime UpdatedDate { get; private set; }
     public string? ModifiedByUser { get; private set; }
-    public AbstracAuditTable()
+    protected AbstracAuditTable()
     {
         
     }
-    public void MarkCreated(DateTime date, string? userName)
+    public void MarkCreated(DateTime date, string userName)
     {
         ValidateDate(date);
         ValidateUser(userName);
@@ -21,7 +21,7 @@ public abstract class AbstracAuditTable : IAuditableEntity
         ModifiedByUser = userName;
     }
 
-    public void MarkUpdated(DateTime date, string? userName)
+    public void MarkUpdated(DateTime date, string userName)
     {
         ValidateDate(date);
         ValidateUser(userName);
