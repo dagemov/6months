@@ -10,6 +10,12 @@ Cerrar la deuda arquitectonica de la semana 4 sin romper la regla principal del 
 - Se creo y versiono la migracion inicial de `Company` y `WorkShift`.
 - La solucion compila correctamente.
 
+## Rama usada
+- `feature/week-04-1-infrastructure-persistence-composition`
+
+## Problema arquitectonico resuelto
+Se completo la comunicacion `Api -> Infrastructure -> Persistence` para poder registrar `DbContext`, ejecutar migraciones y mantener la regla principal del proyecto: `Api` no conoce `Persistence` de forma directa.
+
 ## Correccion tecnica final
 - Se corrigio la firma de auditoria en `AbstracAuditTable`.
 - `MarkCreated` y `MarkUpdated` ahora reciben `string userName` no anulable.
@@ -30,6 +36,18 @@ Motivo:
 - `src/Dagemov.Persistence/DagemovDbContext.cs`
 - `src/Dagemov.Persistence/Migrations/`
 - `src/Dagemov.Domain/ValueObjects/AbstracAuditTable.cs`
+
+## Problemas encontrados
+1. El proyecto de inicio necesitaba quedar correctamente preparado para que las herramientas de EF Core pudieran resolver el `DbContext` en tiempo de diseno.
+2. La inyeccion de `DbContextOptions<DagemovDbContext>` no estaba cerrada todavia mientras la composicion seguia incompleta.
+3. La auditoria del dominio dejaba warnings de nulabilidad aunque la regla de negocio exigia `userName` obligatorio.
+
+## Resolucion aplicada
+- Se movio la extension de servicios a `Dagemov.Infrastructure`.
+- Se agregaron las referencias necesarias para configuracion, DI y SQL Server en infraestructura.
+- Se registro `DagemovDbContext` desde `AddInfrastructureServices(...)`.
+- Se creo y versiono la migracion inicial.
+- Se corrigio la firma de auditoria para dejar la solucion en `0 warnings` y `0 errors`.
 
 ## Validacion esperada
 ```bash
