@@ -8,9 +8,9 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
 {
     public void Configure(EntityTypeBuilder<Company> builder)
     {
-        builder.Property(name => name.Name).IsUnicode().HasMaxLength(150);
-        builder.Property(legalName => legalName).IsUnicode().HasMaxLength(150);
-        builder.Property(description => description).IsRequired(false).HasMaxLength(200);
+        builder.Property(x => x.Name).IsUnicode().HasMaxLength(150);
+        builder.Property(x => x.LegalName).IsUnicode().HasMaxLength(150);
+        builder.Property(x => x.Description).IsRequired(false).HasMaxLength(200);
 
         builder.Property(x => x.CreatedDate)
             .IsRequired();
